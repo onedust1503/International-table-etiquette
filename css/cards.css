@@ -1,0 +1,155 @@
+/* 任務卡片樣式 */
+.task-card {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed);
+}
+
+.task-card:hover {
+    transform: translateY(-2px);
+}
+
+.task-card h4 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.task-card .task-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.task-card .task-progress {
+    height: 6px;
+    background: #e0e0e0;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.task-card .progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: width var(--transition-speed);
+}
+
+/* 任務列表樣式 */
+.tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.task-item {
+    background: white;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-speed);
+}
+
+.task-item:hover {
+    transform: translateX(5px);
+}
+
+.task-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.task-info {
+    flex: 1;
+}
+
+.task-info h4 {
+    color: var(--text-color);
+    margin-bottom: 4px;
+}
+
+.task-info p {
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* 徽章樣式 */
+.badge-item {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    transition: transform var(--transition-speed);
+}
+
+.badge-item:hover {
+    transform: scale(1.1);
+}
+
+.badge-item img {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+}
+
+.badge-item.locked {
+    background: #f5f5f5;
+    opacity: 0.7;
+}
+
+.badge-item.locked::after {
+    content: "🔒";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .task-card,
+    .task-item {
+        padding: 10px;
+    }
+
+    .badge-item {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+@media (max-width: 480px) {
+    .task-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    .task-info h4 {
+        font-size: 0.9rem;
+    }
+
+    .badge-item {
+        width: 40px;
+        height: 40px;
+    }
+} 

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>國際餐桌禮儀文化 - 註冊</title>
+  <!-- Google 字體 -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400&display=swap" rel="stylesheet">
+  <style>
+    /* 設定整體背景與置中 */
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      /* 設定背景圖片 */
+      background: url('imageS/login_image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    /* 註冊框樣式 */
+    .register-container {
+      background: rgba(255,255,255,0.82);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+      max-width: 350px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1.2s ease;
+      backdrop-filter: blur(2px);
+    }
+    /* 淡入動畫 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* 標題樣式 */
+    .register-container h2 {
+      margin-bottom: 2rem;
+      color: #2d3a2e;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    /* 輸入框樣式 */
+    .register-container input[type="email"],
+    .register-container input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.2rem;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.85);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      text-align: center;
+    }
+    /* 讓 placeholder 文字置中 */
+    .register-container input::placeholder {
+      text-align: center;
+    }
+    /* 輸入框聚焦效果 */
+    .register-container input:focus {
+      border-color: #388e3c;
+      box-shadow: 0 0 0 2px #a5d6a7;
+      background: #fff;
+    }
+    /* 按鈕共用樣式 */
+    .btn {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.18s;
+      box-shadow: 0 2px 8px rgba(56,142,60,0.08);
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+    /* 註冊按鈕樣式 */
+    .btn-register {
+      background: #388e3c;
+      color: #fff;
+    }
+    /* 返回登入按鈕樣式 */
+    .btn-back {
+      background: transparent;
+      color: #388e3c;
+      border: 2px solid #388e3c;
+    }
+    /* 按鈕滑鼠懸停與聚焦效果 */
+    .btn-register:hover,
+    .btn-register:focus {
+      background: #2e7031;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .btn-back:hover,
+    .btn-back:focus {
+      background: rgba(56,142,60,0.1);
+      transform: translateY(-2px) scale(1.03);
+    }
+    /* 登入導引 */
+    .login-guide {
+      margin-top: 1rem;
+      color: #666;
+    }
+    .login-guide a {
+      color: #388e3c;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .login-guide a:hover {
+      text-decoration: underline;
+    }
+    /* 響應式設計 */
+    @media (max-width: 600px) {
+      body {
+        padding: 0.5rem;
+        background-attachment: scroll;
+      }
+      .register-container {
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
+      }
+      .register-container h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+      }
+      .register-container input[type="email"],
+      .register-container input[type="password"] {
+        padding: 0.7rem;
+        font-size: 16px; /* 防止 iOS 自動縮放 */
+        margin-bottom: 1rem;
+      }
+      .btn {
+        padding: 0.8rem;
+        font-size: 1rem;
+      }
+      .login-guide {
+        font-size: 0.9rem;
+      }
+    }
+    /* 適應超小螢幕 */
+    @media (max-width: 320px) {
+      .register-container {
+        padding: 1.2rem 0.8rem;
+      }
+      .register-container h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 註冊框容器 -->
+  <div class="register-container">
+    <!-- 系統標題 -->
+    <h2>國際餐桌禮儀文化</h2>
+    <!-- 註冊表單 -->
+    <form id="registerForm" onsubmit="handleRegister(event)">
+      <!-- 電子郵件輸入框 -->
+      <input type="email" id="email" placeholder="請輸入電子郵件" required autocomplete="username">
+      <!-- 密碼輸入框 -->
+      <input type="password" id="password" placeholder="請輸入密碼" required autocomplete="new-password">
+      <!-- 確認密碼輸入框 -->
+      <input type="password" id="confirmPassword" placeholder="請再次輸入密碼" required autocomplete="new-password">
+      <!-- 註冊按鈕 -->
+      <button type="submit" class="btn btn-register">註冊</button>
+      <!-- 登入導引 -->
+      <div class="login-guide">
+        已經有帳號？<a href="login.html">立即登入</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBGvEKCTzQzwDi0Hd3cV5pjBicJpqByuSQ",
+      authDomain: "table-food-culture.firebaseapp.com",
+      projectId: "table-food-culture",
+      storageBucket: "table-food-culture.firebasestorage.app",
+      messagingSenderId: "936255864915",
+      appId: "1:936255864915:web:761832954d17b25e47c6a6",
+      measurementId: "G-TJSNXCHG2G"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Handle registration form submission
+    window.handleRegister = async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      // 檢查密碼是否匹配
+      if (password !== confirmPassword) {
+        alert('密碼不匹配，請重新輸入');
+        return;
+      }
+
+      // 檢查密碼長度
+      if (password.length < 6) {
+        alert('密碼長度必須至少為6個字符');
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log('註冊成功:', user);
+        // 註冊成功後重定向到登入頁面
+        alert('註冊成功！請登入您的帳號。');
+        window.location.href = 'login.html';
+      } catch (error) {
+        console.error('註冊失敗:', error);
+        let errorMessage = '註冊失敗: ';
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            errorMessage += '此電子郵件已被註冊';
+            break;
+          case 'auth/invalid-email':
+            errorMessage += '無效的電子郵件格式';
+            break;
+          case 'auth/operation-not-allowed':
+            errorMessage += '電子郵件/密碼註冊未啟用';
+            break;
+          case 'auth/weak-password':
+            errorMessage += '密碼強度太弱';
+            break;
+          default:
+            errorMessage += error.message;
+        }
+        alert(errorMessage);
+      }
+    };
+  </script>
+</body>
+</html>

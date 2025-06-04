@@ -1,0 +1,218 @@
+/* 全局樣式 */
+:root {
+    --primary-color: #388e3c;
+    --secondary-color: #2e7031;
+    --text-color: #2d3a2e;
+    --background-color: #f5f5f5;
+    --card-background: rgba(255, 255, 255, 0.95);
+    --shadow-color: rgba(31, 38, 135, 0.15);
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* 主要容器 */
+.main-container {
+    padding: 80px 20px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 20px;
+    height: 100vh;
+}
+
+/* 使用者資訊區 */
+.user-info {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    background: var(--card-background);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.passport-container {
+    margin-bottom: 20px;
+}
+
+.passport {
+    background: linear-gradient(145deg, #388e3c 0%, #2e7031 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.user-profile {
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+.progress-container {
+    margin-top: 20px;
+}
+
+.badges-container {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.badges-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* 世界地圖區 */
+.world-map-container {
+    grid-column: 2;
+    grid-row: 1;
+    background: var(--card-background);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 任務提示區 */
+.tasks-container {
+    grid-column: 2;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.daily-challenge,
+.pending-tasks {
+    background: var(--card-background);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.task-card,
+.tasks-list {
+    margin-top: 15px;
+}
+
+/* 首次登入導覽 */
+.tour-guide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.tour-guide.hidden {
+    display: none;
+}
+
+.tour-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+}
+
+.tour-step {
+    margin-bottom: 20px;
+}
+
+.tour-next,
+.tour-skip {
+    padding: 8px 20px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed);
+}
+
+.tour-next {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.tour-skip {
+    background-color: #e0e0e0;
+    color: var(--text-color);
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }
+
+    .user-info {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .world-map-container {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .tasks-container {
+        grid-column: 1;
+        grid-row: 3;
+    }
+}
+
+@media (max-width: 768px) {
+    .tasks-container {
+        grid-template-columns: 1fr;
+    }
+
+    .main-container {
+        padding: 60px 10px 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .user-profile {
+        flex-direction: column;
+    }
+
+    .tour-content {
+        padding: 20px;
+    }
+} 

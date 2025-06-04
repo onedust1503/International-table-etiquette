@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國際餐桌禮儀文化 - 學習平台</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- 自定義 CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/worldmap.css">
+    <link rel="stylesheet" href="css/cards.css">
+    <style>
+        /* 護照盒子樣式 */
+        .passport-box {
+            background: linear-gradient(145deg, #388e3c 0%, #2e7031 100%);
+            border-radius: 12px;
+            padding: 1.2rem;
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .passport-left {
+            flex: 0 0 auto;
+        }
+
+        .passport-right {
+            flex: 1;
+            min-width: 0; /* 防止內容溢出 */
+        }
+
+        .passport-header {
+            margin-bottom: 0.8rem;
+        }
+
+        .passport-header h2 {
+            font-size: 1.4rem;
+            margin: 0;
+            font-weight: 700;
+            white-space: nowrap; /* 防止標題換行 */
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            object-fit: cover;
+        }
+
+        .user-name {
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        .progress-section {
+            margin-top: 0.8rem;
+        }
+
+        .progress-text {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .progress {
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-bar {
+            background-color: #ffd700;
+        }
+
+        /* 徽章區域樣式 */
+        .badges-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .badges-container h3 {
+            color: #2d3a2e;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+        }
+
+        .stamps-row {
+            display: grid;
+            grid-template-columns: repeat(2, 100px);
+            gap: 2rem;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .stamp-item {
+            width: 100px;
+            height: 100px;
+            transition: transform 0.2s;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stamp-item:hover {
+            transform: scale(1.1);
+        }
+
+        .stamp-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .stamp-item.locked img {
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .passport-box {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.5rem;
+                gap: 1rem;
+            }
+
+            .user-profile {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .progress-section {
+                margin-top: 1rem;
+            }
+
+            .badges-container {
+                padding: 1.5rem;
+            }
+
+            .stamps-row {
+                grid-template-columns: repeat(2, 90px);
+                gap: 1.5rem;
+                max-width: 270px;
+            }
+
+            .stamp-item {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .badges-container {
+                padding: 1.2rem;
+            }
+
+            .stamps-row {
+                grid-template-columns: repeat(2, 80px);
+                gap: 1.2rem;
+                max-width: 240px;
+            }
+
+            .stamp-item {
+                width: 80px;
+                height: 80px;
+            }
+        }
+
+        .culture-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .culture-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e0e0e0;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .country-name {
+            font-size: 1.1rem;
+            color: #2d3a2e;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .country-name .flag {
+            font-size: 1.2rem;
+        }
+
+        .culture-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            margin: 0;
+            flex-grow: 1;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 992px) {
+            .culture-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-image {
+                height: 180px;
+            }
+
+            .country-name {
+                font-size: 1rem;
+            }
+
+            .culture-description {
+                font-size: 0.85rem;
+            }
+        }
+
+        .culture-cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .culture-card {
+            width: 280px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image-container {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .culture-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .country-name {
+            font-size: 1.25rem;
+            color: #2d3a2e;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .country-name .flag {
+            font-size: 1.4rem;
+            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+        }
+
+        .culture-description {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* 卡片邊框裝飾 */
+        .culture-card::before {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            bottom: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 992px) {
+            .culture-cards-container {
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .culture-card {
+                width: calc(50% - 1.5rem);
+                min-width: 260px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .culture-cards-container {
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .culture-card {
+                width: 100%;
+            }
+
+            .card-image-container {
+                height: 160px;
+            }
+        }
+
+        .world-map-container {
+            width: 100%;
+            padding: 20px;
+            background: #f5f5f5;
+            min-height: 400px;
+        }
+
+        .culture-cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 2rem;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .culture-card {
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image-container {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            background: #e0e0e0; /* 預設背景色 */
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .culture-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .country-name {
+            font-size: 1.25rem;
+            color: #2d3a2e;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .country-name .flag {
+            font-size: 1.4rem;
+            filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.1));
+        }
+
+        .culture-description {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        /* 卡片邊框裝飾 */
+        .culture-card::before {
+            content: '';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            right: 0.5rem;
+            bottom: 0.5rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 12px;
+            pointer-events: none;
+        }
+
+        /* 響應式調整 */
+        @media (max-width: 992px) {
+            .culture-cards-container {
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .culture-card {
+                width: calc(50% - 1.5rem);
+                min-width: 260px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .culture-cards-container {
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .culture-card {
+                width: 100%;
+            }
+
+            .card-image-container {
+                height: 160px;
+            }
+        }
+
+        .culture-section {
+            padding: 2rem;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 20px;
+        }
+
+        .culture-cards-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .culture-card {
+            width: 300px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .culture-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-image-container {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+            background: #e0e0e0;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .culture-card:hover .card-image {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .country-name {
+            font-size: 1.25rem;
+            color: #2d3a2e;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .country-name .flag {
+            font-size: 1.4rem;
+        }
+
+        .culture-description {
+            color: #4a5568;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        @media (max-width: 992px) {
+            .culture-section {
+                padding: 1.5rem;
+                margin: 15px;
+            }
+
+            .culture-cards-container {
+                gap: 1.5rem;
+            }
+
+            .culture-card {
+                width: calc(50% - 1.5rem);
+                min-width: 280px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .culture-section {
+                padding: 1rem;
+                margin: 10px;
+            }
+
+            .culture-cards-container {
+                gap: 1rem;
+            }
+
+            .culture-card {
+                width: 100%;
+            }
+
+            .card-image-container {
+                height: 160px;
+            }
+        }
+
+        .main-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 80px;
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+
+        .user-info {
+            grid-column: 1;
+        }
+
+        .culture-cards {
+            grid-column: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            align-content: flex-start;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 20px;
+            height: fit-content;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 180px;
+            background: #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        .country-code {
+            font-size: 12px;
+            color: #888;
+            font-weight: normal;
+            margin-left: 4px;
+        }
+
+        @media (max-width: 992px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .user-info, .culture-cards {
+                grid-column: 1;
+            }
+
+            .culture-cards {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                margin-top: 60px;
+                padding: 15px;
+            }
+
+            .culture-cards {
+                padding: 15px;
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            cursor: pointer;
+        }
+
+        .modal-dialog {
+            max-width: 800px;
+        }
+
+        .modal-content {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 1.5rem 1.5rem 0.5rem;
+        }
+
+        .flag-large {
+            font-size: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .culture-image-container {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .culture-detail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .culture-subtitle {
+            color: #2d3a2e;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .culture-description {
+            color: #4a5568;
+            line-height: 1.8;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .culture-gallery {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-dialog {
+                margin: 1rem;
+            }
+
+            .culture-image-container {
+                height: 200px;
+            }
+
+            .gallery-image {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導覽列 -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <img src="images/logo.png" alt="Logo" class="nav-logo">
+            <span>國際餐桌禮儀文化</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="active"><i class="fas fa-home"></i> 首頁</a>
+            <a href="levels.html"><i class="fas fa-tasks"></i> 關卡選擇</a>
+            <a href="achievements.html"><i class="fas fa-trophy"></i> 我的成就</a>
+            <a href="Learning_Record.html"><i class="fas fa-history"></i> 學習記錄</a>
+            <a href="#"><i class="fas fa-question-circle"></i> 幫助</a>
+            <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</a>
+        </div>
+    </nav>
+
+    <!-- 主要內容區 -->
+    <main class="main-container">
+        <style>
+            .main-container {
+                padding: 20px;
+                max-width: 1200px;
+                margin: 0 auto;
+                margin-top: 80px;
+                display: grid;
+                grid-template-columns: 350px 1fr;
+                gap: 20px;
+            }
+
+            .user-info {
+                grid-column: 1;
+            }
+
+            .culture-cards {
+                grid-column: 2;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 20px;
+                align-content: flex-start;
+                background: #fff;
+                border-radius: 15px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                padding: 20px;
+                height: fit-content;
+            }
+
+            .card {
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                overflow: hidden;
+                transition: transform 0.3s ease;
+                height: 100%;
+            }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            }
+
+            .card-img {
+                width: 100%;
+                height: 180px;
+                background: #e0e0e0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #666;
+                font-size: 14px;
+            }
+
+            .card-body {
+                padding: 20px;
+            }
+
+            .card-title {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 12px;
+                font-size: 18px;
+                color: #333;
+            }
+
+            .card-text {
+                color: #666;
+                line-height: 1.6;
+                font-size: 14px;
+                margin: 0;
+            }
+
+            .country-code {
+                font-size: 12px;
+                color: #888;
+                font-weight: normal;
+                margin-left: 4px;
+            }
+
+            @media (max-width: 992px) {
+                .main-container {
+                    grid-template-columns: 1fr;
+                    gap: 15px;
+                }
+
+                .user-info, .culture-cards {
+                    grid-column: 1;
+                }
+
+                .culture-cards {
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                }
+            }
+
+            @media (max-width: 768px) {
+                .main-container {
+                    margin-top: 60px;
+                    padding: 15px;
+                }
+
+                .culture-cards {
+                    padding: 15px;
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+
+        <!-- 使用者資訊區 -->
+        <section class="user-info">
+            <!-- 護照區域 -->
+            <div class="passport-box">
+                <div class="passport-left">
+                    <img src="images/user_avatar.png" alt="使用者頭像" class="user-avatar">
+                </div>
+                <div class="passport-right">
+                    <div class="passport-header">
+                        <h2>文化探索護照</h2>
+                    </div>
+                    <div class="user-profile">
+                        <h3 class="user-name">訪客</h3>
+                    </div>
+                    <div class="progress-section">
+                        <div class="progress-text">探索進度：2 / 6</div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 33%;" 
+                                 aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 徽章區域 -->
+            <div class="badges-container">
+                <h3>已獲得徽章</h3>
+                <div class="stamps-row">
+                    <div class="stamp-item">
+                        <img src="images/badge_france.png" alt="法國徽章" title="法國美食探索者">
+                    </div>
+                    <div class="stamp-item">
+                        <img src="images/badge_japan.png" alt="日本徽章" title="日本禮儀達人">
+                    </div>
+                    <div class="stamp-item locked">
+                        <img src="images/badge_korea.png" alt="韓國徽章" title="韓國文化探索中">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 文化卡片區 -->
+        <div class="culture-cards">
+            <!-- 法國卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#franceModal">
+                <div class="card-img">France Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇫🇷</span>
+                        法國
+                        <span class="country-code">FR</span>
+                    </h3>
+                    <p class="card-text">
+                        優雅的法式用餐藝術，學習如何正確使用刀叉與盤中擺放禮儀，體現精緻生活美學。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 日本卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#japanModal">
+                <div class="card-img">Japan Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇯🇵</span>
+                        日本
+                        <span class="country-code">JP</span>
+                    </h3>
+                    <p class="card-text">
+                        細緻的和式餐桌禮儀，從筷子使用到碗盤擺放，展現對食物與他人的尊重。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 韓國卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#koreaModal">
+                <div class="card-img">Korea Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇰🇷</span>
+                        韓國
+                        <span class="country-code">KR</span>
+                    </h3>
+                    <p class="card-text">
+                        熱情的韓式餐桌文化，從長幼有序到共食禮儀，體現濃厚人情味。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 美國卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#usaModal">
+                <div class="card-img">USA Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇺🇸</span>
+                        美國
+                        <span class="country-code">US</span>
+                    </h3>
+                    <p class="card-text">
+                        輕鬆隨興的美式用餐習慣，學習如何在團體聚餐中享受大份量美食與自由點餐文化，體驗烤肉派對、速食與家庭式聚會的多元風貌。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 印度卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#indiaModal">
+                <div class="card-img">India Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇮🇳</span>
+                        印度
+                        <span class="country-code">IN</span>
+                    </h3>
+                    <p class="card-text">
+                        印度餐桌文化講究右手進食與分享，學習如何以手抓飯、蘸醬搭配咖哩、與家人共用 Thali 餐盤，體現印度重視情感與宗教潔淨的飲食哲學。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 台灣卡片 -->
+            <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#taiwanModal">
+                <div class="card-img">Taiwan Image</div>
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <span>🇹🇼</span>
+                        台灣
+                        <span class="country-code">TW</span>
+                    </h3>
+                    <p class="card-text">
+                        台灣擁有多樣的街頭小吃與團體共食文化，從吃飯配湯、使用筷子與共用菜盤，到夜市自由點餐，反映出台灣人的熱情與彈性飲食美學。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals -->
+        <!-- 法國 Modal -->
+        <div class="modal fade" id="franceModal" tabindex="-1" aria-labelledby="franceModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="franceModalLabel">
+                            <span class="flag-large">🇫🇷</span>
+                            法國餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/france_culture.jpg" alt="法國餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">優雅的法式餐桌藝術</h6>
+                            <p class="culture-description">
+                                法國餐桌文化代表著優雅與精緻的生活藝術。在法式餐廳，一頓正式的晚餐通常包含前菜、主菜和甜點，每道菜都有其特定的擺放位置和享用順序。用餐時，刀叉的使用也有其獨特規範：用餐結束時，將刀叉並排放置於盤中，以表示用餐完畢。
+                            </p>
+                            <p class="culture-description">
+                                法國人特別重視用餐氛圍，餐桌上常會擺放蠟燭、鮮花，營造溫馨浪漫的氣氛。酒水搭配也是一門學問，不同菜餚會搭配不同的葡萄酒，以提升整體用餐體驗。這種對美食與餐桌禮儀的講究，體現了法國人對生活品質的追求。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/france_detail1.jpg" alt="法式餐具擺放" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/france_detail2.jpg" alt="法式餐廳氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/france_detail3.jpg" alt="法式美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 日本 Modal -->
+        <div class="modal fade" id="japanModal" tabindex="-1" aria-labelledby="japanModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="japanModalLabel">
+                            <span class="flag-large">🇯🇵</span>
+                            日本餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/japan_culture.jpg" alt="日本餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">細緻的和式餐桌禮儀</h6>
+                            <p class="culture-description">
+                                日本餐桌文化強調對食物的尊重和禮儀，從筷子使用到碗盤擺放都有其獨特的規範。用餐時，日本人通常會將筷子放在碗盤的右側，並且不會將筷子直立插入飯中。這種禮儀體現了日本人對食物的敬意和對他人的尊重。
+                            </p>
+                            <p class="culture-description">
+                                日本餐桌文化也注重餐桌上的擺設和氛圍，常見的擺設包括小菜、味噌湯、主菜和甜點。這種細緻的擺放方式不僅美觀，也反映了日本文化中的細節和美感。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/japan_detail1.jpg" alt="日本餐桌擺設" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/japan_detail2.jpg" alt="日本餐桌氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/japan_detail3.jpg" alt="日本美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 韓國 Modal -->
+        <div class="modal fade" id="koreaModal" tabindex="-1" aria-labelledby="koreaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="koreaModalLabel">
+                            <span class="flag-large">🇰🇷</span>
+                            韓國餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/korea_culture.jpg" alt="韓國餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">熱情的韓式餐桌文化</h6>
+                            <p class="culture-description">
+                                韓國餐桌文化強調長幼有序和共食禮儀，從長輩開始用餐，到最後一位用餐者結束，體現了韓國文化中的尊重和團結精神。
+                            </p>
+                            <p class="culture-description">
+                                韓國餐桌文化也注重食物的擺放和搭配，常見的擺設包括小菜、泡菜、主菜和飯後甜點。這種擺放方式不僅美觀，也反映了韓國文化中的細節和美感。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/korea_detail1.jpg" alt="韓國餐桌擺設" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/korea_detail2.jpg" alt="韓國餐桌氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/korea_detail3.jpg" alt="韓國美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 美國 Modal -->
+        <div class="modal fade" id="usaModal" tabindex="-1" aria-labelledby="usaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="usaModalLabel">
+                            <span class="flag-large">🇺🇸</span>
+                            美國餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/usa_culture.jpg" alt="美國餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">輕鬆隨興的美式用餐習慣</h6>
+                            <p class="culture-description">
+                                美國餐桌文化強調輕鬆隨興和多元文化，從烤肉派對到速食文化，反映了美國社會的包容性和創新精神。
+                            </p>
+                            <p class="culture-description">
+                                美國餐桌文化也注重食物的份量和自由點餐，這種習慣體現了美國文化中的個人自由和對食物的享受。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/usa_detail1.jpg" alt="美國餐桌擺設" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/usa_detail2.jpg" alt="美國餐桌氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/usa_detail3.jpg" alt="美國美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 印度 Modal -->
+        <div class="modal fade" id="indiaModal" tabindex="-1" aria-labelledby="indiaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="indiaModalLabel">
+                            <span class="flag-large">🇮🇳</span>
+                            印度餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/india_culture.jpg" alt="印度餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">右手進食與分享的哲學</h6>
+                            <p class="culture-description">
+                                印度餐桌文化講究右手進食與分享，從以手抓飯到蘸醬搭配咖哩，反映了印度文化中的宗教和社會價值。
+                            </p>
+                            <p class="culture-description">
+                                印度餐桌文化也注重家庭共用 Thali 餐盤，這種分享方式體現了印度文化中的團結和共食精神。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/india_detail1.jpg" alt="印度餐桌擺設" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/india_detail2.jpg" alt="印度餐桌氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/india_detail3.jpg" alt="印度美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 台灣 Modal -->
+        <div class="modal fade" id="taiwanModal" tabindex="-1" aria-labelledby="taiwanModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <h5 class="modal-title" id="taiwanModalLabel">
+                            <span class="flag-large">🇹🇼</span>
+                            台灣餐桌文化
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="culture-image-container mb-4">
+                            <img src="images/taiwan_culture.jpg" alt="台灣餐桌文化" class="culture-detail-image">
+                        </div>
+                        <div class="culture-content">
+                            <h6 class="culture-subtitle mb-3">多樣的街頭小吃與團體共食文化</h6>
+                            <p class="culture-description">
+                                台灣擁有多樣的街頭小吃與團體共食文化，從吃飯配湯到使用筷子與共用菜盤，反映了台灣文化中的熱情與彈性。
+                            </p>
+                            <p class="culture-description">
+                                台灣餐桌文化也注重食物的搭配與分享，從夜市自由點餐到家庭式聚會，反映了台灣文化中的多元與包容。
+                            </p>
+                        </div>
+                        <div class="culture-gallery mt-4">
+                            <div class="row g-3">
+                                <div class="col-4">
+                                    <img src="images/taiwan_detail1.jpg" alt="台灣餐桌擺設" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/taiwan_detail2.jpg" alt="台灣餐桌氛圍" class="gallery-image">
+                                </div>
+                                <div class="col-4">
+                                    <img src="images/taiwan_detail3.jpg" alt="台灣美食" class="gallery-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 任務提示區 -->
+        <section class="tasks-container">
+            <div class="daily-challenge">
+                <h3><i class="fas fa-star"></i> 今日推薦關卡</h3>
+                <div id="dailyTask" class="task-card"></div>
+            </div>
+            <div class="pending-tasks">
+                <h3><i class="fas fa-clock"></i> 待完成任務</h3>
+                <div id="pendingTasksList" class="tasks-list"></div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 首次登入導覽提示 -->
+    <div id="tourGuide" class="tour-guide hidden">
+        <div class="tour-content">
+            <div class="tour-step"></div>
+            <button class="tour-next">下一步</button>
+            <button class="tour-skip">跳過導覽</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript 模組 -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

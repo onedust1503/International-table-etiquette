@@ -1,0 +1,133 @@
+/* 世界地圖容器 */
+.world-map {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    position: relative;
+}
+
+/* 文化卡片 */
+.culture-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+    max-width: 400px;
+    width: 90%;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-speed);
+}
+
+.culture-card.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.culture-card .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 5px;
+    line-height: 1;
+}
+
+.card-content {
+    margin-top: 10px;
+}
+
+/* 國家區域樣式 */
+.country {
+    fill: #e0e0e0;
+    stroke: #fff;
+    stroke-width: 0.5;
+    transition: fill var(--transition-speed);
+    cursor: pointer;
+}
+
+.country:hover {
+    fill: var(--primary-color);
+}
+
+.country.active {
+    fill: var(--secondary-color);
+}
+
+/* 文化卡片內容樣式 */
+.culture-info {
+    text-align: center;
+}
+
+.culture-info h3 {
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.culture-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.culture-description {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.etiquette-list {
+    text-align: left;
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.etiquette-list li {
+    margin-bottom: 8px;
+    color: #444;
+}
+
+/* 響應式設計 */
+@media (max-width: 768px) {
+    .world-map {
+        min-height: 300px;
+    }
+
+    .culture-card {
+        max-width: 320px;
+    }
+
+    .culture-info h3 {
+        font-size: 1.2rem;
+    }
+
+    .culture-image {
+        height: 160px;
+    }
+}
+
+@media (max-width: 480px) {
+    .world-map {
+        min-height: 250px;
+    }
+
+    .culture-card {
+        max-width: 280px;
+    }
+
+    .culture-image {
+        height: 140px;
+    }
+} 

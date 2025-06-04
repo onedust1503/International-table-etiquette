@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>國際餐桌禮儀文化 - 登入</title>
+  <!-- Google 字體 -->
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,400&display=swap" rel="stylesheet">
+  <style>
+    /* 設定整體背景與置中 */
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      /* 設定背景圖片 */
+      background: url('imageS/login_image.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* 登入框樣式 */
+    .login-container {
+      /* 調整透明度為更透明 */
+      background: rgba(255,255,255,0.82);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+      max-width: 350px;
+      width: 90%;
+      text-align: center;
+      animation: fadeIn 1.2s ease;
+      backdrop-filter: blur(2px);
+    }
+    /* 淡入動畫 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    /* 標題樣式 */
+    .login-container h2 {
+      margin-bottom: 2rem;
+      color: #2d3a2e;
+      font-size: 1.5rem;
+      letter-spacing: 0.5px;
+    }
+    /* 輸入框樣式 */
+    .login-container input[type="email"],
+    .login-container input[type="password"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.8rem 1rem;
+      margin-bottom: 1.2rem;
+      border: 1.5px solid #cfd8dc;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.85);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+      text-align: center;
+    }
+    /* 讓 placeholder 文字置中 */
+    .login-container input[type="email"]::placeholder,
+    .login-container input[type="password"]::placeholder {
+      text-align: center;
+    }
+    /* 輸入框聚焦效果 */
+    .login-container input:focus {
+      border-color: #388e3c;
+      box-shadow: 0 0 0 2px #a5d6a7;
+      background: #fff;
+    }
+    /* 按鈕共用樣式 */
+    .btn {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.25s, transform 0.18s;
+      box-shadow: 0 2px 8px rgba(56,142,60,0.08);
+      letter-spacing: 0.5px;
+      margin-bottom: 1rem;
+    }
+    /* 登入按鈕樣式 */
+    .btn-login {
+      background: #388e3c;
+      color: #fff;
+    }
+    /* 註冊按鈕樣式 */
+    .btn-register {
+      background: transparent;
+      color: #388e3c;
+      border: 2px solid #388e3c;
+    }
+    /* 按鈕滑鼠懸停與聚焦效果 */
+    .btn-login:hover,
+    .btn-login:focus {
+      background: #2e7031;
+      transform: translateY(-2px) scale(1.03);
+    }
+    .btn-register:hover,
+    .btn-register:focus {
+      background: rgba(56,142,60,0.1);
+      transform: translateY(-2px) scale(1.03);
+    }
+    /* 分隔線樣式 */
+    .divider {
+      margin: 1rem 0;
+      text-align: center;
+      position: relative;
+    }
+    .divider::before,
+    .divider::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 45%;
+      height: 1px;
+      background: #cfd8dc;
+    }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+    /* 響應式設計 */
+    @media (max-width: 600px) {
+      .login-container {
+        padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+        max-width: 98vw;
+      }
+      .login-container h2 {
+        font-size: 1.1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 登入框容器 -->
+  <div class="login-container">
+    <!-- 系統標題 -->
+    <h2>國際餐桌禮儀文化</h2>
+    <!-- 登入表單 -->
+    <form id="loginForm" onsubmit="handleLogin(event)">
+      <!-- 電子郵件輸入框 -->
+      <input type="email" id="email" placeholder="請輸入電子郵件" required autocomplete="username">
+      <!-- 密碼輸入框 -->
+      <input type="password" id="password" placeholder="請輸入密碼" required autocomplete="current-password">
+      <!-- 登入按鈕 -->
+      <button type="submit" class="btn btn-login">登入</button>
+      <!-- 註冊導引 -->
+      <div class="register-guide">
+        還沒有帳號？<a href="register.html">立即註冊</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-auth.js";
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyBGvEKCTzQzwDi0Hd3cV5pjBicJpqByuSQ",
+      authDomain: "table-food-culture.firebaseapp.com",
+      projectId: "table-food-culture",
+      storageBucket: "table-food-culture.firebasestorage.app",
+      messagingSenderId: "936255864915",
+      appId: "1:936255864915:web:761832954d17b25e47c6a6",
+      measurementId: "G-TJSNXCHG2G"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Handle login form submission
+    window.handleLogin = async (e) => {
+      e.preventDefault();
+      
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log('登入成功:', user);
+        // 登入成功後重定向到主頁面
+        window.location.href = 'index.html';
+      } catch (error) {
+        console.error('登入失敗:', error);
+        alert('登入失敗: ' + error.message);
+      }
+    };
+  </script>
+</body>
+</html>
