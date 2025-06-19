@@ -189,6 +189,10 @@
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         console.log('登入成功:', user);
+        // 儲存使用者資訊到 localStorage
+        localStorage.setItem('userEmail', user.email);
+        // 顯示成功通知
+        alert('登入成功！歡迎回來！');
         // 登入成功後重定向到主頁面
         window.location.href = 'index.html';
       } catch (error) {

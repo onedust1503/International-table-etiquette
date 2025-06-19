@@ -5,26 +5,23 @@ export function initNavigation() {
     
     // 添加導覽列事件監聽
     addNavigationListeners();
-    
-    // 處理登出按鈕
-    handleLogout();
 }
 
 function createMobileMenu() {
     const navbar = document.querySelector('.navbar');
-    const menuButton = document.createElement('button');
-    menuButton.className = 'menu-toggle';
-    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-    navbar.insertBefore(menuButton, navbar.querySelector('.nav-links'));
-
-    // 漢堡選單點擊事件
-    menuButton.addEventListener('click', () => {
-        const navLinks = navbar.querySelector('.nav-links');
-        navLinks.classList.toggle('active');
-        menuButton.innerHTML = navLinks.classList.contains('active') 
-            ? '<i class="fas fa-times"></i>' 
-            : '<i class="fas fa-bars"></i>';
+    const navLinks = document.querySelector('.nav-links');
+    
+    // 創建漢堡選單按鈕
+    const menuToggle = document.createElement('button');
+    menuToggle.className = 'menu-toggle';
+    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+    
+    // 添加點擊事件
+    menuToggle.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
     });
+    
+    navbar.appendChild(menuToggle);
 }
 
 function addNavigationListeners() {
@@ -50,27 +47,9 @@ function addNavigationListeners() {
 }
 
 function handleNavigation(path) {
-    // 這裡可以添加路由邏輯
-    // 例如：使用 History API 或觸發頁面切換
-    console.log('Navigating to:', path);
-}
-
-function handleLogout() {
-    const logoutBtn = document.querySelector('.logout-btn');
-    
-    logoutBtn.addEventListener('click', async (e) => {
-        e.preventDefault();
-        
-        try {
-            // 這裡可以添加登出邏輯
-            // 例如：清除 session、呼叫登出 API 等
-            
-            // 導向登入頁
-            window.location.href = 'login.html';
-        } catch (error) {
-            console.error('登出失敗:', error);
-        }
-    });
+    if (path && path !== '#') {
+        window.location.href = path;
+    }
 }
 
 // 監聽視窗大小變化

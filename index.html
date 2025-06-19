@@ -814,6 +814,185 @@
                 height: 80px;
             }
         }
+
+        /* 收合面板樣式 */
+        .collapse-section {
+            margin-bottom: 1rem;
+        }
+
+        .collapse-header {
+            background: #f8f9fa;
+            padding: 0.8rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .collapse-header:hover {
+            background: #e9ecef;
+        }
+
+        .collapse-header h6 {
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .collapse-content {
+            padding: 1rem;
+            display: none;
+        }
+
+        .collapse-content.show {
+            display: block;
+        }
+
+        .culture-list {
+            padding-left: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .culture-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        .culture-list ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .important-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        /* 更新手風琴樣式 */
+        .accordion-item {
+            border: none;
+            margin-bottom: 0.5rem;
+        }
+
+        .accordion-button {
+            background-color: #f8f9fa;
+            border-radius: 8px !important;
+            box-shadow: none !important;
+            padding: 1rem;
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e9ecef;
+            color: #2d3a2e;
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0,0,0,.125);
+        }
+
+        .accordion-body {
+            padding: 1rem;
+            background-color: #fff;
+        }
+
+        .quiz-option {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        .quiz-option:hover {
+            border-color: #388e3c;
+            background: #f0f7f0;
+        }
+
+        .quiz-option.selected {
+            border-color: #388e3c;
+            background: #e8f5e9;
+        }
+
+        .result-score {
+            font-size: 2rem;
+            color: #388e3c;
+        }
+
+        .result-feedback {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .quiz-question {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2d3a2e;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .stamp-item {
+            transition: all 0.3s ease;
+        }
+        
+        .stamp-item.locked img {
+            opacity: 0.3;
+            filter: grayscale(100%);
+            transition: all 0.3s ease;
+        }
+        
+        .stamp-item:not(.locked) img {
+            opacity: 1;
+            filter: none;
+            transform: scale(1.05);
+        }
+
+        .tasks-container {
+            grid-column: 2;
+            margin-top: 20px;
+            width: 100%;
+            max-width: 100%;
+        }
+        @media (max-width: 992px) {
+            .tasks-container {
+                grid-column: 1;
+                max-width: 100%;
+            }
+        }
+
+        .tasks-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        @media (max-width: 768px) {
+            .tasks-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .pending-tasks {
+            grid-column: 2;
+            width: 100%;
+            max-width: 100%;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 24px 20px;
+            margin-top: 20px;
+        }
+        @media (max-width: 992px) {
+            .pending-tasks {
+                grid-column: 1;
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
@@ -824,126 +1003,22 @@
             <span>國際餐桌禮儀文化</span>
         </div>
         <div class="nav-links">
+            <div class="user-identity">
+                <i class="fas fa-user"></i>
+                <span>目前身分：</span>
+                <span id="userName">訪客</span>
+            </div>
             <a href="index.html" class="active"><i class="fas fa-home"></i> 首頁</a>
             <a href="levels.html"><i class="fas fa-tasks"></i> 關卡選擇</a>
             <a href="achievements.html"><i class="fas fa-trophy"></i> 我的成就</a>
-            <a href="Learning_Record.html"><i class="fas fa-history"></i> 學習記錄</a>
             <a href="#"><i class="fas fa-question-circle"></i> 幫助</a>
+            <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> 登入</a>
             <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</a>
         </div>
     </nav>
 
     <!-- 主要內容區 -->
     <main class="main-container">
-        <style>
-            .main-container {
-                padding: 20px;
-                max-width: 1200px;
-                margin: 0 auto;
-                margin-top: 80px;
-                display: grid;
-                grid-template-columns: 350px 1fr;
-                gap: 20px;
-            }
-
-            .user-info {
-                grid-column: 1;
-            }
-
-            .culture-cards {
-                grid-column: 2;
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 20px;
-                align-content: flex-start;
-                background: #fff;
-                border-radius: 15px;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                padding: 20px;
-                height: fit-content;
-            }
-
-            .card {
-                background: white;
-                border-radius: 10px;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                overflow: hidden;
-                transition: transform 0.3s ease;
-                height: 100%;
-            }
-
-            .card:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-            }
-
-            .card-img {
-                width: 100%;
-                height: 180px;
-                background: #e0e0e0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #666;
-                font-size: 14px;
-            }
-
-            .card-body {
-                padding: 20px;
-            }
-
-            .card-title {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                margin-bottom: 12px;
-                font-size: 18px;
-                color: #333;
-            }
-
-            .card-text {
-                color: #666;
-                line-height: 1.6;
-                font-size: 14px;
-                margin: 0;
-            }
-
-            .country-code {
-                font-size: 12px;
-                color: #888;
-                font-weight: normal;
-                margin-left: 4px;
-            }
-
-            @media (max-width: 992px) {
-                .main-container {
-                    grid-template-columns: 1fr;
-                    gap: 15px;
-                }
-
-                .user-info, .culture-cards {
-                    grid-column: 1;
-                }
-
-                .culture-cards {
-                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                }
-            }
-
-            @media (max-width: 768px) {
-                .main-container {
-                    margin-top: 60px;
-                    padding: 15px;
-                }
-
-                .culture-cards {
-                    padding: 15px;
-                    grid-template-columns: 1fr;
-                }
-            }
-        </style>
-
-        <!-- 使用者資訊區 -->
         <section class="user-info">
             <!-- 護照區域 -->
             <div class="passport-box">
@@ -955,13 +1030,14 @@
                         <h2>文化探索護照</h2>
                     </div>
                     <div class="user-profile">
-                        <h3 class="user-name">訪客</h3>
+                        <h3 class="user-name" id="userName">訪客</h3>
                     </div>
                     <div class="progress-section">
-                        <div class="progress-text">探索進度：2 / 6</div>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="width: 33%;" 
-                                 aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="progress-text">
+                            探索進度 : <span id="explorationProgress">2</span> / 6
+                        </div>
+                        <div class="progress" id="progressContainer">
+                            <div class="progress-bar" role="progressbar" style="width: 33%;" aria-valuenow="2" aria-valuemin="0" aria-valuemax="6" id="progressBar"></div>
                         </div>
                     </div>
                 </div>
@@ -971,14 +1047,23 @@
             <div class="badges-container">
                 <h3>已獲得徽章</h3>
                 <div class="stamps-row">
-                    <div class="stamp-item">
-                        <img src="images/badge_france.png" alt="法國徽章" title="法國美食探索者">
+                    <div class="stamp-item" data-country="france">
+                        <img src="images/badge_france.png" alt="法國徽章">
                     </div>
-                    <div class="stamp-item">
-                        <img src="images/badge_japan.png" alt="日本徽章" title="日本禮儀達人">
+                    <div class="stamp-item" data-country="japan">
+                        <img src="images/badge_japan.png" alt="日本徽章">
                     </div>
-                    <div class="stamp-item locked">
-                        <img src="images/badge_korea.png" alt="韓國徽章" title="韓國文化探索中">
+                    <div class="stamp-item" data-country="korea">
+                        <img src="images/badge_korea.png" alt="韓國徽章">
+                    </div>
+                    <div class="stamp-item" data-country="usa">
+                        <img src="images/badge_usa.png" alt="美國徽章">
+                    </div>
+                    <div class="stamp-item" data-country="india">
+                        <img src="images/badge_india.png" alt="印度徽章">
+                    </div>
+                    <div class="stamp-item" data-country="taiwan">
+                        <img src="images/badge_taiwan.png" alt="台灣徽章">
                     </div>
                 </div>
             </div>
@@ -988,7 +1073,9 @@
         <div class="culture-cards">
             <!-- 法國卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#franceModal">
-                <div class="card-img">France Image</div>
+                <div class="card-img">
+                    <img src="images/france_culture.jpg" alt="法國餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇫🇷</span>
@@ -1003,7 +1090,9 @@
 
             <!-- 日本卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#japanModal">
-                <div class="card-img">Japan Image</div>
+                <div class="card-img">
+                    <img src="images/japan_culture.jpg" alt="日本餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇯🇵</span>
@@ -1018,7 +1107,9 @@
 
             <!-- 韓國卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#koreaModal">
-                <div class="card-img">Korea Image</div>
+                <div class="card-img">
+                    <img src="images/korea_culture.jpg" alt="韓國餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇰🇷</span>
@@ -1033,7 +1124,9 @@
 
             <!-- 美國卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#usaModal">
-                <div class="card-img">USA Image</div>
+                <div class="card-img">
+                    <img src="images/usa_culture.jpg" alt="美國餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇺🇸</span>
@@ -1048,7 +1141,9 @@
 
             <!-- 印度卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#indiaModal">
-                <div class="card-img">India Image</div>
+                <div class="card-img">
+                    <img src="images/india_culture.jpg" alt="印度餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇮🇳</span>
@@ -1063,7 +1158,9 @@
 
             <!-- 台灣卡片 -->
             <div class="card" role="button" data-bs-toggle="modal" data-bs-target="#taiwanModal">
-                <div class="card-img">Taiwan Image</div>
+                <div class="card-img">
+                    <img src="images/taiwan_culture.jpg" alt="台灣餐桌文化" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
                 <div class="card-body">
                     <h3 class="card-title">
                         <span>🇹🇼</span>
@@ -1077,270 +1174,10 @@
             </div>
         </div>
 
-        <!-- Modals -->
-        <!-- 法國 Modal -->
-        <div class="modal fade" id="franceModal" tabindex="-1" aria-labelledby="franceModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="franceModalLabel">
-                            <span class="flag-large">🇫🇷</span>
-                            法國餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/france_culture.jpg" alt="法國餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">優雅的法式餐桌藝術</h6>
-                            <p class="culture-description">
-                                法國餐桌文化代表著優雅與精緻的生活藝術。在法式餐廳，一頓正式的晚餐通常包含前菜、主菜和甜點，每道菜都有其特定的擺放位置和享用順序。用餐時，刀叉的使用也有其獨特規範：用餐結束時，將刀叉並排放置於盤中，以表示用餐完畢。
-                            </p>
-                            <p class="culture-description">
-                                法國人特別重視用餐氛圍，餐桌上常會擺放蠟燭、鮮花，營造溫馨浪漫的氣氛。酒水搭配也是一門學問，不同菜餚會搭配不同的葡萄酒，以提升整體用餐體驗。這種對美食與餐桌禮儀的講究，體現了法國人對生活品質的追求。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/france_detail1.jpg" alt="法式餐具擺放" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/france_detail2.jpg" alt="法式餐廳氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/france_detail3.jpg" alt="法式美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="pending-tasks">
+            <h3><i class="fas fa-clock"></i> 待完成任務</h3>
+            <div id="pendingTasksList" class="tasks-list"></div>
         </div>
-
-        <!-- 日本 Modal -->
-        <div class="modal fade" id="japanModal" tabindex="-1" aria-labelledby="japanModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="japanModalLabel">
-                            <span class="flag-large">🇯🇵</span>
-                            日本餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/japan_culture.jpg" alt="日本餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">細緻的和式餐桌禮儀</h6>
-                            <p class="culture-description">
-                                日本餐桌文化強調對食物的尊重和禮儀，從筷子使用到碗盤擺放都有其獨特的規範。用餐時，日本人通常會將筷子放在碗盤的右側，並且不會將筷子直立插入飯中。這種禮儀體現了日本人對食物的敬意和對他人的尊重。
-                            </p>
-                            <p class="culture-description">
-                                日本餐桌文化也注重餐桌上的擺設和氛圍，常見的擺設包括小菜、味噌湯、主菜和甜點。這種細緻的擺放方式不僅美觀，也反映了日本文化中的細節和美感。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/japan_detail1.jpg" alt="日本餐桌擺設" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/japan_detail2.jpg" alt="日本餐桌氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/japan_detail3.jpg" alt="日本美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 韓國 Modal -->
-        <div class="modal fade" id="koreaModal" tabindex="-1" aria-labelledby="koreaModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="koreaModalLabel">
-                            <span class="flag-large">🇰🇷</span>
-                            韓國餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/korea_culture.jpg" alt="韓國餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">熱情的韓式餐桌文化</h6>
-                            <p class="culture-description">
-                                韓國餐桌文化強調長幼有序和共食禮儀，從長輩開始用餐，到最後一位用餐者結束，體現了韓國文化中的尊重和團結精神。
-                            </p>
-                            <p class="culture-description">
-                                韓國餐桌文化也注重食物的擺放和搭配，常見的擺設包括小菜、泡菜、主菜和飯後甜點。這種擺放方式不僅美觀，也反映了韓國文化中的細節和美感。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/korea_detail1.jpg" alt="韓國餐桌擺設" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/korea_detail2.jpg" alt="韓國餐桌氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/korea_detail3.jpg" alt="韓國美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 美國 Modal -->
-        <div class="modal fade" id="usaModal" tabindex="-1" aria-labelledby="usaModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="usaModalLabel">
-                            <span class="flag-large">🇺🇸</span>
-                            美國餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/usa_culture.jpg" alt="美國餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">輕鬆隨興的美式用餐習慣</h6>
-                            <p class="culture-description">
-                                美國餐桌文化強調輕鬆隨興和多元文化，從烤肉派對到速食文化，反映了美國社會的包容性和創新精神。
-                            </p>
-                            <p class="culture-description">
-                                美國餐桌文化也注重食物的份量和自由點餐，這種習慣體現了美國文化中的個人自由和對食物的享受。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/usa_detail1.jpg" alt="美國餐桌擺設" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/usa_detail2.jpg" alt="美國餐桌氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/usa_detail3.jpg" alt="美國美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 印度 Modal -->
-        <div class="modal fade" id="indiaModal" tabindex="-1" aria-labelledby="indiaModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="indiaModalLabel">
-                            <span class="flag-large">🇮🇳</span>
-                            印度餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/india_culture.jpg" alt="印度餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">右手進食與分享的哲學</h6>
-                            <p class="culture-description">
-                                印度餐桌文化講究右手進食與分享，從以手抓飯到蘸醬搭配咖哩，反映了印度文化中的宗教和社會價值。
-                            </p>
-                            <p class="culture-description">
-                                印度餐桌文化也注重家庭共用 Thali 餐盤，這種分享方式體現了印度文化中的團結和共食精神。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/india_detail1.jpg" alt="印度餐桌擺設" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/india_detail2.jpg" alt="印度餐桌氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/india_detail3.jpg" alt="印度美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 台灣 Modal -->
-        <div class="modal fade" id="taiwanModal" tabindex="-1" aria-labelledby="taiwanModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title" id="taiwanModalLabel">
-                            <span class="flag-large">🇹🇼</span>
-                            台灣餐桌文化
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="culture-image-container mb-4">
-                            <img src="images/taiwan_culture.jpg" alt="台灣餐桌文化" class="culture-detail-image">
-                        </div>
-                        <div class="culture-content">
-                            <h6 class="culture-subtitle mb-3">多樣的街頭小吃與團體共食文化</h6>
-                            <p class="culture-description">
-                                台灣擁有多樣的街頭小吃與團體共食文化，從吃飯配湯到使用筷子與共用菜盤，反映了台灣文化中的熱情與彈性。
-                            </p>
-                            <p class="culture-description">
-                                台灣餐桌文化也注重食物的搭配與分享，從夜市自由點餐到家庭式聚會，反映了台灣文化中的多元與包容。
-                            </p>
-                        </div>
-                        <div class="culture-gallery mt-4">
-                            <div class="row g-3">
-                                <div class="col-4">
-                                    <img src="images/taiwan_detail1.jpg" alt="台灣餐桌擺設" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/taiwan_detail2.jpg" alt="台灣餐桌氛圍" class="gallery-image">
-                                </div>
-                                <div class="col-4">
-                                    <img src="images/taiwan_detail3.jpg" alt="台灣美食" class="gallery-image">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 任務提示區 -->
-        <section class="tasks-container">
-            <div class="daily-challenge">
-                <h3><i class="fas fa-star"></i> 今日推薦關卡</h3>
-                <div id="dailyTask" class="task-card"></div>
-            </div>
-            <div class="pending-tasks">
-                <h3><i class="fas fa-clock"></i> 待完成任務</h3>
-                <div id="pendingTasksList" class="tasks-list"></div>
-            </div>
-        </section>
     </main>
 
     <!-- 首次登入導覽提示 -->
@@ -1354,7 +1191,611 @@
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- JavaScript 模組 -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/levelStatus.js"></script>
+    <script type="module">
+        import { auth } from './js/auth.js';
+        import { levelStatusManager } from './js/levelStatus.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        const db = getFirestore(getApp());
+
+        const totalLevels = 6; // 總關卡數
+
+        async function updateExplorationProgressAndBadges(userId) {
+            console.log('updateExplorationProgressAndBadges called with userId:', userId);
+            const explorationProgressSpan = document.getElementById('explorationProgress');
+            const progressBar = document.getElementById('progressBar');
+            const badgeStamps = document.querySelectorAll('.stamp-item');
+
+            let viewedCulture = {};
+            let completedCount = 0;
+            if (userId) {
+                try {
+                    const userDoc = await getDoc(doc(db, 'users', userId));
+                    viewedCulture = userDoc.exists() && userDoc.data().viewedCulture ? userDoc.data().viewedCulture : {};
+                    completedCount = Object.values(viewedCulture).filter(Boolean).length;
+                } catch (error) {
+                    console.error('獲取 viewedCulture 狀態失敗:', error);
+                }
+            }
+
+            // 更新探索進度數字
+            if (explorationProgressSpan) {
+                explorationProgressSpan.textContent = completedCount;
+                console.log('Updated explorationProgressSpan to:', completedCount);
+            }
+
+            // 更新進度條
+            if (progressBar) {
+                const progressPercentage = (completedCount / totalLevels) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressBar.setAttribute('aria-valuenow', completedCount);
+                console.log('Updated progressBar width to:', `${progressPercentage}%`);
+            }
+
+            // 更新徽章顯示
+            badgeStamps.forEach(stamp => {
+                const country = stamp.dataset.country;
+                if (country && viewedCulture[country]) {
+                    stamp.classList.remove('locked');
+                    console.log(`Badge for ${country} unlocked.`);
+                } else {
+                    stamp.classList.add('locked');
+                    console.log(`Badge for ${country} locked.`);
+                }
+            });
+        }
+
+        // 監聽登入狀態變化
+        onAuthStateChanged(auth, (user) => {
+            const loginBtn = document.querySelector('.login-btn');
+            const logoutBtn = document.querySelector('.logout-btn');
+            const userNameSpan = document.getElementById('userName');
+
+            if (user) {
+                loginBtn.style.display = 'none';
+                logoutBtn.style.display = 'inline-block';
+                userNameSpan.textContent = user.email.split('@')[0]; // 顯示用戶名
+                updateExplorationProgressAndBadges(user.uid);
+            } else {
+                loginBtn.style.display = 'inline-block';
+                logoutBtn.style.display = 'none';
+                userNameSpan.textContent = '訪客';
+                updateExplorationProgressAndBadges(null); // 未登入時重置進度
+            }
+        });
+
+        // 登出按鈕事件監聽（確保首頁的登出按鈕也能正確運作）
+        document.querySelector('.logout-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await auth.signOut();
+            } catch (error) {
+                console.error('登出失敗:', error);
+            }
+        });
+
+        // 監聽關卡狀態更新事件 (從 levels.html 傳來)
+        window.addEventListener('levelStatusUpdated', () => {
+            const user = auth.currentUser;
+            if (user) {
+                updateExplorationProgressAndBadges(user.uid);
+            }
+        });
+
+        // 頁面載入時初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = auth.currentUser;
+            if (user) {
+                updateExplorationProgressAndBadges(user.uid);
+            } else {
+                updateExplorationProgressAndBadges(null);
+            }
+
+            // 為所有文化介紹 Modal 添加事件監聽器
+            document.querySelectorAll('.culture-modal').forEach(modal => {
+                modal.addEventListener('hidden.bs.modal', async () => {
+                    const country = modal.id.replace('Modal', '').toLowerCase();
+                    const currentUser = auth.currentUser;
+                    if (currentUser && country) {
+                        try {
+                            // 寫入 viewedCulture
+                            await setDoc(
+                                doc(db, 'users', currentUser.uid),
+                                { viewedCulture: { [country]: true } },
+                                { merge: true }
+                            );
+                            // 立即刷新徽章
+                            updateExplorationProgressAndBadges(currentUser.uid);
+                            console.log(`文化介紹 '${country}' 已標記為已瀏覽。`);
+                        } catch (error) {
+                            console.error(`更新文化介紹狀態失敗 (${country}):`, error);
+                        }
+                    }
+                });
+            });
+        });
+
+        // 預設將徽章設為鎖定狀態 (如果沒有 completed 類別)
+        document.querySelectorAll('.stamp-item').forEach(stamp => {
+            if (!stamp.classList.contains('completed')) { // 假設 completed 類別表示已完成
+                stamp.classList.add('locked');
+            }
+        });
+    </script>
     <script type="module" src="js/app.js"></script>
+
+    <!-- 法國餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="franceModal" tabindex="-1" aria-labelledby="franceModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="franceModalLabel">FR 法國餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/france_culture.jpg" alt="法國餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="franceAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="franceUtensils">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#franceUtensilsPanel" aria-expanded="true" aria-controls="franceUtensilsPanel">
+                    餐具使用
+                  </button>
+                </h2>
+                <div id="franceUtensilsPanel" class="accordion-collapse collapse show" aria-labelledby="franceUtensils" data-bs-parent="#franceAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>餐具擺放：刀在右、叉在左，湯匙在最外側。餐具由外往內依序使用。</li>
+                      <li>餐具暗號：用餐暫停時，刀叉呈八字型放盤上；用餐結束時，刀叉平行放於盤右側。</li>
+                      <li>麵包盤與奶油刀通常放在左上方。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="franceTime">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#franceTimePanel" aria-expanded="false" aria-controls="franceTimePanel">
+                    用餐時間
+                  </button>
+                </h2>
+                <div id="franceTimePanel" class="accordion-collapse collapse" aria-labelledby="franceTime" data-bs-parent="#franceAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>午餐約12:00-14:00，晚餐約19:00-21:00。</li>
+                      <li>法國人重視慢食文化，一餐常持續2小時以上。</li>
+                      <li>上菜順序：前菜、主菜、起司、甜點、咖啡。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="franceNotice">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#franceNoticePanel" aria-expanded="false" aria-controls="franceNoticePanel">
+                    用餐注意事項
+                  </button>
+                </h2>
+                <div id="franceNoticePanel" class="accordion-collapse collapse" aria-labelledby="franceNotice" data-bs-parent="#franceAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>麵包要撕小塊吃，不可直接咬。</li>
+                      <li>牛排切一口吃一口，不要一次切完。</li>
+                      <li>沙拉用叉子吃，不要用刀切。</li>
+                      <li>不可用手指指食物或人。</li>
+                      <li>用餐時避免討論金錢、政治等話題。</li>
+                      <li>喝酒時要與每個人眼神交流。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>法國人重視用餐氣氛與禮儀，請保持優雅、安靜與禮貌。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 日本餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="japanModal" tabindex="-1" aria-labelledby="japanModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="japanModalLabel">JP 日本餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/japan_culture.jpg" alt="日本餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="japanAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="japanBasic">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#japanBasicPanel" aria-expanded="true" aria-controls="japanBasicPanel">
+                    基本用餐禮儀
+                  </button>
+                </h2>
+                <div id="japanBasicPanel" class="accordion-collapse collapse show" aria-labelledby="japanBasic" data-bs-parent="#japanAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>入座時要等主人或長輩先坐。</li>
+                      <li>用餐前說「いただきます」，用餐後說「ごちそうさまでした」。</li>
+                      <li>結帳時多在櫃檯，不在桌邊。</li>
+                      <li>用餐時盡量保持安靜，避免大聲喧嘩。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="japanChopsticks">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#japanChopsticksPanel" aria-expanded="false" aria-controls="japanChopsticksPanel">
+                    筷子使用禮儀
+                  </button>
+                </h2>
+                <div id="japanChopsticksPanel" class="accordion-collapse collapse" aria-labelledby="japanChopsticks" data-bs-parent="#japanAccordion">
+                  <div class="accordion-body">
+                    <strong>禁忌行為：</strong>
+                    <ul>
+                      <li>不可將筷子插在飯上。</li>
+                      <li>不可用筷子傳遞食物。</li>
+                      <li>不可用筷子指人或物。</li>
+                      <li>不可用筷子在盤中翻找食物。</li>
+                    </ul>
+                    <strong>正確使用方式：</strong>
+                    <ul>
+                      <li>筷子不用時要放在筷架上。</li>
+                      <li>夾菜時要用公筷。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="japanSpecialFood">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#japanSpecialFoodPanel" aria-expanded="false" aria-controls="japanSpecialFoodPanel">
+                    特殊料理禮儀
+                  </button>
+                </h2>
+                <div id="japanSpecialFoodPanel" class="accordion-collapse collapse" aria-labelledby="japanSpecialFood" data-bs-parent="#japanAccordion">
+                  <div class="accordion-body">
+                    <strong>壽司禮儀：</strong>
+                    <ul>
+                      <li>可用手或筷子吃壽司。</li>
+                      <li>壽司沾醬油時只沾魚生部分。</li>
+                    </ul>
+                    <strong>湯麵禮儀：</strong>
+                    <ul>
+                      <li>吃拉麵可發出聲音，表示美味。</li>
+                      <li>喝湯可直接端碗。</li>
+                    </ul>
+                    <strong>米飯和味噌湯：</strong>
+                    <ul>
+                      <li>米飯可端碗吃，味噌湯可直接喝。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="japanDrink">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#japanDrinkPanel" aria-expanded="false" aria-controls="japanDrinkPanel">
+                    飲酒禮儀
+                  </button>
+                </h2>
+                <div id="japanDrinkPanel" class="accordion-collapse collapse" aria-labelledby="japanDrink" data-bs-parent="#japanAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>不可自己倒酒給自己，要互相倒酒。</li>
+                      <li>敬酒時要舉杯並說「乾杯」。</li>
+                      <li>喝酒時要等長輩先動作。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="japanVegetarian">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#japanVegetarianPanel" aria-expanded="false" aria-controls="japanVegetarianPanel">
+                    素食注意事項
+                  </button>
+                </h2>
+                <div id="japanVegetarianPanel" class="accordion-collapse collapse" aria-labelledby="japanVegetarian" data-bs-parent="#japanAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>日本素食多為「精進料理」，多用豆腐、蔬菜、海藻。</li>
+                      <li>點餐時可詢問「ベジタリアン（vegetarian）」選項。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>日本人重視安靜與整潔，請勿大聲喧嘩或弄亂桌面。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 韓國餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="koreaModal" tabindex="-1" aria-labelledby="koreaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="koreaModalLabel">KR 韓國餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/korea_culture.jpg" alt="韓國餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="koreaAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="koreaType">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#koreaTypePanel" aria-expanded="true" aria-controls="koreaTypePanel">
+                    飲食分類及特色
+                  </button>
+                </h2>
+                <div id="koreaTypePanel" class="accordion-collapse collapse show" aria-labelledby="koreaType" data-bs-parent="#koreaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>主食：米飯、麵食、粥。</li>
+                      <li>副食：泡菜、燒烤、拌飯、煎餅。</li>
+                      <li>甜點：五榖糕餅、甜湯。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="koreaHealth">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#koreaHealthPanel" aria-expanded="false" aria-controls="koreaHealthPanel">
+                    食療與養生文化
+                  </button>
+                </h2>
+                <div id="koreaHealthPanel" class="accordion-collapse collapse" aria-labelledby="koreaHealth" data-bs-parent="#koreaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>講究醫食同源，重視食材對身體的影響。</li>
+                      <li>五行五色理論：黃、綠、白、黑、紅，均衡搭配。</li>
+                      <li>順應節氣，夏天喝熱湯以熱治熱。</li>
+                      <li>傳統烹飪方式強調自然原味。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="koreaSoup">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#koreaSoupPanel" aria-expanded="false" aria-controls="koreaSoupPanel">
+                    湯品文化
+                  </button>
+                </h2>
+                <div id="koreaSoupPanel" class="accordion-collapse collapse" aria-labelledby="koreaSoup" data-bs-parent="#koreaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>功夫湯配飯湯品：如牛骨湯、蔘雞湯。</li>
+                      <li>燉物湯品：如泡菜鍋、豆腐鍋。</li>
+                      <li>火鍋湯品：如部隊鍋、海鮮鍋。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="koreaSide">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#koreaSidePanel" aria-expanded="false" aria-controls="koreaSidePanel">
+                    小菜文化
+                  </button>
+                </h2>
+                <div id="koreaSidePanel" class="accordion-collapse collapse" aria-labelledby="koreaSide" data-bs-parent="#koreaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>每餐有多樣小菜，免費續加。</li>
+                      <li>泡菜種類繁多：白菜、蘿蔔、黃瓜等。</li>
+                      <li>小菜要與他人分享，不能獨佔。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="koreaUtensils">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#koreaUtensilsPanel" aria-expanded="false" aria-controls="koreaUtensilsPanel">
+                    餐具與使用禮儀
+                  </button>
+                </h2>
+                <div id="koreaUtensilsPanel" class="accordion-collapse collapse" aria-labelledby="koreaUtensils" data-bs-parent="#koreaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>韓國餐具多為金屬筷與扁湯匙。</li>
+                      <li>長幼有序，長輩先動筷才能開始吃。</li>
+                      <li>不可用筷子敲碗或插在飯上。</li>
+                      <li>倒酒時要用雙手，喝酒時要轉身避開長輩。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>韓國人重視團體與禮節，請尊重長輩與同桌的人。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 美國餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="usaModal" tabindex="-1" aria-labelledby="usaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="usaModalLabel">US 美國餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/usa_culture.jpg" alt="美國餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="usaAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="usaKnife">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#usaKnifePanel" aria-expanded="true" aria-controls="usaKnifePanel">
+                    刀叉使用方法
+                  </button>
+                </h2>
+                <div id="usaKnifePanel" class="accordion-collapse collapse show" aria-labelledby="usaKnife" data-bs-parent="#usaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>美式用餐：切一口、換手、叉送入口。</li>
+                      <li>歐式用餐：刀叉不換手，直接送入口。</li>
+                      <li>餐具暗號：暫停時刀叉八字型，結束時平行放盤上。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="usaPlate">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#usaPlatePanel" aria-expanded="false" aria-controls="usaPlatePanel">
+                    餐盤使用禮儀
+                  </button>
+                </h2>
+                <div id="usaPlatePanel" class="accordion-collapse collapse" aria-labelledby="usaPlate" data-bs-parent="#usaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>不可將餐具放在桌面上。</li>
+                      <li>用餐時餐巾放膝上，用完放桌上。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="usaSpecialFood">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#usaSpecialFoodPanel" aria-expanded="false" aria-controls="usaSpecialFoodPanel">
+                    特殊食物食用方式
+                  </button>
+                </h2>
+                <div id="usaSpecialFoodPanel" class="accordion-collapse collapse" aria-labelledby="usaSpecialFood" data-bs-parent="#usaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>義大利麵：用叉子捲，不用湯匙輔助。</li>
+                      <li>湯品：用湯匙由內往外舀，喝湯時不可發出聲音。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="usaService">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#usaServicePanel" aria-expanded="false" aria-controls="usaServicePanel">
+                    服務互動禮儀
+                  </button>
+                </h2>
+                <div id="usaServicePanel" class="accordion-collapse collapse" aria-labelledby="usaService" data-bs-parent="#usaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>需服務時可舉手或與服務生眼神交流。</li>
+                      <li>用餐結束要給小費（約15-20%）。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>美國人重視個人空間與自由，請尊重他人選擇。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 印度餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="indiaModal" tabindex="-1" aria-labelledby="indiaModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="indiaModalLabel">IN 印度餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/india_culture.jpg" alt="印度餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="indiaAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="indiaTime">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#indiaTimePanel" aria-expanded="true" aria-controls="indiaTimePanel">
+                    用餐時間禮儀
+                  </button>
+                </h2>
+                <div id="indiaTimePanel" class="accordion-collapse collapse show" aria-labelledby="indiaTime" data-bs-parent="#indiaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>用餐時間彈性，家庭聚餐多在晚間。</li>
+                      <li>用餐後會以甜點或印度茶作結。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="indiaHand">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#indiaHandPanel" aria-expanded="false" aria-controls="indiaHandPanel">
+                    用手進食之文化
+                  </button>
+                </h2>
+                <div id="indiaHandPanel" class="accordion-collapse collapse" aria-labelledby="indiaHand" data-bs-parent="#indiaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>多用右手進食，左手被視為不潔。</li>
+                      <li>用手抓飯時只用指尖，不碰到手掌。</li>
+                      <li>吃飯前後要洗手。</li>
+                      <li>不可用手碰別人的食物或餐具。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="indiaCurry">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#indiaCurryPanel" aria-expanded="false" aria-controls="indiaCurryPanel">
+                    咖哩文化及烹調特色
+                  </button>
+                </h2>
+                <div id="indiaCurryPanel" class="accordion-collapse collapse" aria-labelledby="indiaCurry" data-bs-parent="#indiaAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>印度咖哩種類繁多，香料運用豐富。</li>
+                      <li>常見主食：Naan、Roti、香料飯。</li>
+                      <li>多數印度人為素食者，牛肉和豬肉常被禁食。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>印度餐桌重視潔淨與分享，請尊重當地宗教與飲食習慣。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 台灣餐桌文化 Modal -->
+    <div class="modal fade culture-modal" id="taiwanModal" tabindex="-1" aria-labelledby="taiwanModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="taiwanModalLabel">TW 台灣餐桌禮儀</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <img src="images/taiwan_culture.jpg" alt="台灣餐桌文化" class="img-fluid mb-3">
+            <div class="accordion" id="taiwanAccordion">
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="taiwanStreet">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#taiwanStreetPanel" aria-expanded="true" aria-controls="taiwanStreetPanel">
+                    街頭小吃及共食文化
+                  </button>
+                </h2>
+                <div id="taiwanStreetPanel" class="accordion-collapse collapse show" aria-labelledby="taiwanStreet" data-bs-parent="#taiwanAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>台灣小吃多元：滷肉飯、牛肉麵、蚵仔煎、珍珠奶茶。</li>
+                      <li>夜市文化盛行，飲食多元。</li>
+                      <li>用餐時多以圓桌共食，強調分享。</li>
+                      <li>夾菜時會用公筷母匙。</li>
+                      <li>節慶時有特定應景美食（如粽子、湯圓、蘿蔔糕）。</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="important-note mt-3">
+              <strong>小提醒：</strong>台灣飲食文化融合多元，請尊重各地飲食差異。
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

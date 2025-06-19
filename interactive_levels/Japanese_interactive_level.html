@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>壽司餐桌禮儀完整互動模擬</title>
+  <style>
+    body {
+      font-family: "Noto Sans TC", sans-serif;
+      background: url('../images/日本關卡背景.png') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+    }
+    h1, h2 {
+      text-align: center;
+      color: #d35400;
+    }
+    .table-area {
+      position: relative;
+      width: min(60vw, 60vh);
+      height: min(60vw, 60vh);
+      margin: 20px auto 0 auto;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      background: url('../images/日本關卡桌墊.png') no-repeat center center;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dropzone {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border: 2px dashed #aaa;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      font-size: 14px;
+      transform: translate(-50%, -50%);
+    }
+    .item {
+      width: 140px;
+      height: 140px;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: grab;
+    }
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .floating-items {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .feedback {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2c3e50;
+      white-space: pre-wrap;
+    }
+    .complete-message {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      font-size: 20px;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>壽司餐桌禮儀完整互動模擬</h1>
+    <h2>拖曳物品到正確餐桌位置</h2>
+
+    <div class="floating-items">
+      <div class="item" id="sushi" draggable="true"><img src="../images/壽司.png" alt="壽司"></div>
+      <div class="item" id="soy" draggable="true"><img src="../images/醬油碟.png" alt="醬油碟"></div>
+      <div class="item" id="ginger" draggable="true"><img src="../images/醃薑片.png" alt="醃薑片"></div>
+      <div class="item" id="chopsticks" draggable="true"><img src="../images/筷子.png" alt="筷子"></div>
+      <div class="item" id="miso" draggable="true"><img src="../images/味噌湯.png" alt="味噌湯"></div>
+    </div>
+
+    <div class="table-area">
+      <div class="dropzone" data-accept="sushi" style="top: 50%; left: 50%;"></div>
+      <div class="dropzone" data-accept="soy" style="top: 50%; left: 80%;"></div>
+      <div class="dropzone" data-accept="ginger" style="top: 20%; left: 50%;"></div>
+      <div class="dropzone" data-accept="chopsticks" style="top: 85%; left: 50%;"></div>
+      <div class="dropzone" data-accept="miso" style="top: 70%; left: 80%;"></div>
+    </div>
+
+    <div class="feedback" id="feedback"></div>
+    <div class="complete-message" id="completeMessage">🎉 全部正確完成！您已成功完成壽司餐桌擺設。</div>
+    <audio id="sound-correct" src="https://www.soundjay.com/button/sounds/button-3.mp3"></audio>
+    <audio id="sound-complete" src="https://www.soundjay.com/human/sounds/applause-8.mp3"></audio>
+
+    <script>
+      const items = document.querySelectorAll('.item');
+      const dropzones = document.querySelectorAll('.dropzone');
+      const feedback = document.getElementById('feedback');
+      const completeMessage = document.getElementById('completeMessage');
+      const soundCorrect = document.getElementById('sound-correct');
+      const soundComplete = document.getElementById('sound-complete');
+      let correctCount = 0;
+
+      const culturalFeedback = {
+        sushi: '壽司應擺在桌面中央，象徵主角，方便共享與欣賞。',
+        soy: '醬油碟應放在右側，讓魚肉輕沾，不讓米飯吸醬。',
+        ginger: '醃薑片通常放上方，用來清口味，不與壽司同吃。',
+        chopsticks: '筷子橫放在餐桌下方，不插入飯中，以免誤用喪禮習俗。',
+        miso: '味噌湯應放於右手側前方，方便右手端起飲用。'
+      };
+
+      items.forEach(item => {
+        item.addEventListener('dragstart', e => {
+          e.dataTransfer.setData('text/plain', item.id);
+        });
+      });
+
+      dropzones.forEach(zone => {
+        zone.addEventListener('dragover', e => {
+          e.preventDefault();
+        });
+        zone.addEventListener('drop', e => {
+          e.preventDefault();
+          const draggedId = e.dataTransfer.getData('text/plain');
+          const acceptId = zone.getAttribute('data-accept');
+
+          if (draggedId === acceptId) {
+            const draggedEl = document.getElementById(draggedId);
+            zone.innerHTML = '';
+            zone.appendChild(draggedEl);
+            draggedEl.setAttribute('draggable', 'false');
+            feedback.textContent = `✅ 成功放置「${draggedId}」！\n${culturalFeedback[draggedId]}`;
+            soundCorrect.play();
+            correctCount++;
+
+            if (correctCount === 5) {
+              completeMessage.style.display = 'block';
+              soundComplete.play();
+            }
+          } else {
+            feedback.textContent = `❌「${draggedId}」放錯位置了，請再觀察日式餐桌位置喔。`;
+          }
+        });
+      });
+    </script>
+  </div>
+</body>
+</html>

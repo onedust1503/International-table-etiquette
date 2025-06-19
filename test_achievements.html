@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成就系統測試</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        .btn-test {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-cog"></i> 成就系統測試</h1>
+        
+        <div class="test-section">
+            <h3>用戶認證測試</h3>
+            <div id="authStatus">檢查中...</div>
+            <button class="btn btn-primary btn-test" onclick="checkAuth()">檢查認證狀態</button>
+        </div>
+
+        <div class="test-section">
+            <h3>關卡狀態測試</h3>
+            <div id="levelStatus">載入中...</div>
+            <button class="btn btn-success btn-test" onclick="completeLevel('france')">完成法國關卡</button>
+            <button class="btn btn-success btn-test" onclick="completeLevel('japan')">完成日本關卡</button>
+            <button class="btn btn-success btn-test" onclick="completeLevel('korea')">完成韓國關卡</button>
+            <button class="btn btn-warning btn-test" onclick="resetLevels()">重置所有關卡</button>
+        </div>
+
+        <div class="test-section">
+            <h3>成就系統測試</h3>
+            <div id="achievementStatus">載入中...</div>
+            <button class="btn btn-info btn-test" onclick="testAchievements()">測試成就系統</button>
+            <button class="btn btn-secondary btn-test" onclick="goToAchievements()">前往成就頁面</button>
+        </div>
+
+        <div class="test-section">
+            <h3>事件監聽測試</h3>
+            <div id="eventLog">等待事件...</div>
+            <button class="btn btn-dark btn-test" onclick="clearEventLog()">清除日誌</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth } from './js/firebase-config.js';
+        import { levelStatusManager } from './js/levelStatus.js';
+        import { AchievementManager } from './js/achievements.js';
+
+        let achievementManager;
+        let currentUser = null;
+
+        // 檢查認證狀態
+        window.checkAuth = async function() {
+            const statusDiv = document.getElementById('authStatus');
+            if (auth.currentUser) {
+                currentUser = auth.currentUser;
+                statusDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>已登入</strong><br>
+                        用戶ID: ${currentUser.uid}<br>
+                        電子郵件: ${currentUser.email}
+                    </div>
+                `;
+            } else {
+                statusDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>未登入</strong><br>
+                        請先登入以測試成就系統
+                    </div>
+                `;
+            }
+        };
+
+        // 完成關卡
+        window.completeLevel = async function(level) {
+            if (!currentUser) {
+                alert('請先登入');
+                return;
+            }
+
+            try {
+                await levelStatusManager.updateLevelStatus(currentUser.uid, level, 'completed');
+                document.getElementById('levelStatus').innerHTML = `
+                    <div class="alert alert-success">
+                        ${level} 關卡已完成！
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('levelStatus').innerHTML = `
+                    <div class="alert alert-danger">
+                        完成關卡失敗: ${error.message}
+                    </div>
+                `;
+            }
+        };
+
+        // 重置關卡
+        window.resetLevels = async function() {
+            if (!currentUser) {
+                alert('請先登入');
+                return;
+            }
+
+            try {
+                const levels = ['france', 'japan', 'korea', 'usa', 'india', 'taiwan'];
+                for (const level of levels) {
+                    await levelStatusManager.updateLevelStatus(currentUser.uid, level, 'not_started');
+                }
+                document.getElementById('levelStatus').innerHTML = `
+                    <div class="alert alert-info">
+                        所有關卡已重置
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('levelStatus').innerHTML = `
+                    <div class="alert alert-danger">
+                        重置關卡失敗: ${error.message}
+                    </div>
+                `;
+            }
+        };
+
+        // 測試成就系統
+        window.testAchievements = async function() {
+            if (!currentUser) {
+                alert('請先登入');
+                return;
+            }
+
+            try {
+                achievementManager = new AchievementManager();
+                await achievementManager.initialize();
+                document.getElementById('achievementStatus').innerHTML = `
+                    <div class="alert alert-success">
+                        成就系統初始化成功！
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById('achievementStatus').innerHTML = `
+                    <div class="alert alert-danger">
+                        成就系統初始化失敗: ${error.message}
+                    </div>
+                `;
+            }
+        };
+
+        // 前往成就頁面
+        window.goToAchievements = function() {
+            window.open('achievements.html', '_blank');
+        };
+
+        // 清除事件日誌
+        window.clearEventLog = function() {
+            document.getElementById('eventLog').innerHTML = '等待事件...';
+        };
+
+        // 監聽事件
+        window.addEventListener('levelStatusUpdated', (event) => {
+            const eventLog = document.getElementById('eventLog');
+            const timestamp = new Date().toLocaleTimeString();
+            eventLog.innerHTML += `
+                <div class="alert alert-info">
+                    <strong>${timestamp}</strong><br>
+                    關卡: ${event.detail.level}<br>
+                    狀態: ${event.detail.status}
+                </div>
+            `;
+        });
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 等待認證狀態
+            await new Promise(resolve => {
+                if (auth.currentUser) {
+                    currentUser = auth.currentUser;
+                    resolve();
+                } else {
+                    const unsubscribe = auth.onAuthStateChanged(user => {
+                        currentUser = user;
+                        unsubscribe();
+                        resolve();
+                    });
+                }
+            });
+
+            // 檢查認證狀態
+            checkAuth();
+
+            // 載入關卡狀態
+            if (currentUser) {
+                try {
+                    const levels = await levelStatusManager.getAllLevelStatus(currentUser.uid);
+                    const completedLevels = Object.entries(levels)
+                        .filter(([_, status]) => status === 'completed')
+                        .map(([level, _]) => level);
+                    
+                    document.getElementById('levelStatus').innerHTML = `
+                        <div class="alert alert-info">
+                            <strong>當前關卡狀態:</strong><br>
+                            已完成: ${completedLevels.join(', ') || '無'}
+                        </div>
+                    `;
+                } catch (error) {
+                    document.getElementById('levelStatus').innerHTML = `
+                        <div class="alert alert-danger">
+                            載入關卡狀態失敗: ${error.message}
+                        </div>
+                    `;
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

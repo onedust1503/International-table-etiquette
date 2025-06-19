@@ -1,6 +1,5 @@
-// 引入第三方庫
-import { loadSVGMap } from '../utils/svgLoader.js';
-import { culturalData } from '../data/culturalData.js';
+// import { loadSVGMap } from '../utils/svgLoader.js';
+// import { culturalData } from '../data/culturalData.js';
 
 let currentCountry = null;
 const cultureCard = document.getElementById('cultureCard');
@@ -8,14 +7,14 @@ const cardContent = document.querySelector('.card-content');
 
 export function initWorldMap() {
     // 載入世界地圖 SVG
-    loadSVGMap('images/world-map.svg', '#worldMap').then(() => {
+    // loadSVGMap('images/world-map.svg', '#worldMap').then(() => {
         // 為所有國家添加事件監聽器
         const countries = document.querySelectorAll('.country');
         countries.forEach(country => {
             country.addEventListener('click', handleCountryClick);
             country.addEventListener('mouseover', handleCountryHover);
         });
-    });
+    // });
 
     // 關閉按鈕事件
     const closeBtn = cultureCard.querySelector('.close-btn');

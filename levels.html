@@ -196,6 +196,14 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        .level-card.completed-card {
+            border: 2px solid #388e3c;
+            box-shadow: 0 0 0 4px #e8f5e9;
+            background: #f6fff7;
+            /* 亮起效果 */
+            transition: box-shadow 0.3s, border 0.3s, background 0.3s;
+        }
     </style>
 </head>
 <body>
@@ -206,11 +214,16 @@
             <span>國際餐桌禮儀文化</span>
         </div>
         <div class="nav-links">
+            <div class="user-identity">
+                <i class="fas fa-user"></i>
+                <span>目前身分：</span>
+                <span id="userName">訪客</span>
+            </div>
             <a href="index.html"><i class="fas fa-home"></i> 首頁</a>
             <a href="#" class="active"><i class="fas fa-tasks"></i> 關卡選擇</a>
             <a href="achievements.html"><i class="fas fa-trophy"></i> 我的成就</a>
-            <a href="Learning_Record.html"><i class="fas fa-history"></i> 學習記錄</a>
             <a href="#"><i class="fas fa-question-circle"></i> 幫助</a>
+            <a href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> 登入</a>
             <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> 登出</a>
         </div>
     </nav>
@@ -224,7 +237,7 @@
         </h2>
         <div class="levels-grid">
             <!-- 法國互動關卡 -->
-            <div class="level-card" onclick="window.location.href='French Level.html'">
+            <div class="level-card" data-level="france" onclick="window.location.href='French Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇫🇷</span>
                     <h3 class="level-title">法國 <span class="country-code">FR</span></h3>
@@ -245,7 +258,7 @@
             </div>
 
             <!-- 日本互動關卡 -->
-            <div class="level-card" onclick="window.location.href='levels/japan/interactive.html'">
+            <div class="level-card" data-level="japan" onclick="window.location.href='Japan Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇯🇵</span>
                     <h3 class="level-title">日本 <span class="country-code">JP</span></h3>
@@ -266,7 +279,7 @@
             </div>
 
             <!-- 韓國互動關卡 -->
-            <div class="level-card" onclick="window.location.href='levels/korea/interactive.html'">
+            <div class="level-card" data-level="korea" onclick="window.location.href='Korea Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇰🇷</span>
                     <h3 class="level-title">韓國 <span class="country-code">KR</span></h3>
@@ -287,7 +300,7 @@
             </div>
 
             <!-- 美國互動關卡 -->
-            <div class="level-card" onclick="window.location.href='levels/usa/interactive.html'">
+            <div class="level-card" data-level="usa" onclick="window.location.href='USA Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇺🇸</span>
                     <h3 class="level-title">美國 <span class="country-code">US</span></h3>
@@ -308,7 +321,7 @@
             </div>
 
             <!-- 印度互動關卡 -->
-            <div class="level-card" onclick="window.location.href='levels/india/interactive.html'">
+            <div class="level-card" data-level="india" onclick="window.location.href='India Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇮🇳</span>
                     <h3 class="level-title">印度 <span class="country-code">IN</span></h3>
@@ -329,7 +342,7 @@
             </div>
 
             <!-- 台灣互動關卡 -->
-            <div class="level-card" onclick="window.location.href='levels/taiwan/interactive.html'">
+            <div class="level-card" data-level="taiwan" onclick="window.location.href='Taiwan Level.html'">
                 <div class="level-header">
                     <span class="country-flag">🇹🇼</span>
                     <h3 class="level-title">台灣 <span class="country-code">TW</span></h3>
@@ -391,7 +404,7 @@
                         <div class="difficulty">
                             <span class="difficulty-dot active"></span>
                             <span class="difficulty-dot active"></span>
-                            <span class="difficulty-dot"></span>
+                            <span class="difficulty-dot active"></span>
                         </div>
                         <span class="level-status">未開始</span>
                     </div>
@@ -412,7 +425,7 @@
                         <div class="difficulty">
                             <span class="difficulty-dot active"></span>
                             <span class="difficulty-dot active"></span>
-                            <span class="difficulty-dot"></span>
+                            <span class="difficulty-dot active"></span>
                         </div>
                         <span class="level-status">未開始</span>
                     </div>
@@ -432,7 +445,7 @@
                     <div class="level-footer">
                         <div class="difficulty">
                             <span class="difficulty-dot active"></span>
-                            <span class="difficulty-dot"></span>
+                            <span class="difficulty-dot active"></span>
                             <span class="difficulty-dot"></span>
                         </div>
                         <span class="level-status">未開始</span>
@@ -454,7 +467,7 @@
                         <div class="difficulty">
                             <span class="difficulty-dot active"></span>
                             <span class="difficulty-dot active"></span>
-                            <span class="difficulty-dot active"></span>
+                            <span class="difficulty-dot"></span>
                         </div>
                         <span class="level-status">未開始</span>
                     </div>
@@ -497,51 +510,292 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="quiz-question">
-                        在法式正餐中，以下哪個餐具應該放在餐盤右側？
-                    </div>
-                    <div class="quiz-options">
-                        <div class="quiz-option">
-                            A. 沙拉叉
+                    <div id="franceQuizContainer">
+                        <div id="franceQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
                         </div>
-                        <div class="quiz-option">
-                            B. 主菜刀
-                        </div>
-                        <div class="quiz-option">
-                            C. 甜點匙
-                        </div>
-                        <div class="quiz-option">
-                            D. 麵包盤
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="franceCurrentQuestion">1</span>/10</span>
+                            <button class="btn btn-primary" id="franceNextButton">下一題</button>
                         </div>
                     </div>
-                    <div class="quiz-footer">
-                        <span class="quiz-progress">問題 1/10</span>
-                        <button class="btn btn-primary">下一題</button>
+                    <div id="franceResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="franceScoreDisplay">0</span> / 10 分
+                        </div>
+                        <div class="result-feedback mb-4" id="franceFeedbackText"></div>
+                        <button class="btn btn-success" id="franceRetryButton">重新測驗</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 其他國家的測驗 Modal 結構相同，只需更換內容 -->
+    <!-- 日本測驗 Modal -->
+    <div class="modal fade quiz-modal" id="japanQuizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="country-flag">🇯🇵</span>
+                        日本餐桌文化測驗
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="japanQuizContainer">
+                        <div id="japanQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
+                        </div>
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="japanCurrentQuestion">1</span>/10</span>
+                            <button class="btn btn-primary" id="japanNextButton">下一題</button>
+                        </div>
+                    </div>
+                    <div id="japanResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="japanScoreDisplay">0</span> / 10 分
+                        </div>
+                        <div class="result-feedback mb-4" id="japanFeedbackText"></div>
+                        <button class="btn btn-success" id="japanRetryButton">重新測驗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 韓國測驗 Modal -->
+    <div class="modal fade quiz-modal" id="koreaQuizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="country-flag">🇰🇷</span>
+                        韓國餐桌文化測驗
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="koreaQuizContainer">
+                        <div id="koreaQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
+                        </div>
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="koreaCurrentQuestion">1</span>/10</span>
+                            <button class="btn btn-primary" id="koreaNextButton">下一題</button>
+                        </div>
+                    </div>
+                    <div id="koreaResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="koreaScoreDisplay">0</span> / 10 分
+                        </div>
+                        <div class="result-feedback mb-4" id="koreaFeedbackText"></div>
+                        <button class="btn btn-success" id="koreaRetryButton">重新測驗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 美國測驗 Modal -->
+    <div class="modal fade quiz-modal" id="usaQuizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="country-flag">🇺🇸</span>
+                        美國餐桌文化測驗
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="usaQuizContainer">
+                        <div id="usaQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
+                        </div>
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="usaCurrentQuestion">1</span>/5</span>
+                            <button class="btn btn-primary" id="usaNextButton">下一題</button>
+                        </div>
+                    </div>
+                    <div id="usaResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="usaScoreDisplay">0</span> / 5 分
+                        </div>
+                        <div class="result-feedback mb-4" id="usaFeedbackText"></div>
+                        <button class="btn btn-success" id="usaRetryButton">重新測驗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 印度測驗 Modal -->
+    <div class="modal fade quiz-modal" id="indiaQuizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="country-flag">🇮🇳</span>
+                        印度餐桌文化測驗
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="indiaQuizContainer">
+                        <div id="indiaQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
+                        </div>
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="indiaCurrentQuestion">1</span>/5</span>
+                            <button class="btn btn-primary" id="indiaNextButton">下一題</button>
+                        </div>
+                    </div>
+                    <div id="indiaResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="indiaScoreDisplay">0</span> / 5 分
+                        </div>
+                        <div class="result-feedback mb-4" id="indiaFeedbackText"></div>
+                        <button class="btn btn-success" id="indiaRetryButton">重新測驗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 台灣測驗 Modal -->
+    <div class="modal fade quiz-modal" id="taiwanQuizModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <span class="country-flag">🇹🇼</span>
+                        台灣餐桌文化測驗
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="taiwanQuizContainer">
+                        <div id="taiwanQuestionContainer" class="mb-4">
+                            <!-- 問題會在這裡動態顯示 -->
+                        </div>
+                        <div class="quiz-footer d-flex justify-content-between align-items-center">
+                            <span class="quiz-progress">問題 <span id="taiwanCurrentQuestion">1</span>/3</span>
+                            <button class="btn btn-primary" id="taiwanNextButton">下一題</button>
+                        </div>
+                    </div>
+                    <div id="taiwanResultContainer" class="text-center p-4" style="display: none;">
+                        <h4 class="mb-3">測驗結果</h4>
+                        <div class="result-score mb-3">
+                            <span class="h2" id="taiwanScoreDisplay">0</span> / 3 分
+                        </div>
+                        <div class="result-feedback mb-4" id="taiwanFeedbackText"></div>
+                        <button class="btn btn-success" id="taiwanRetryButton">重新測驗</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script>
-        // 初始化所有測驗選項的點擊事件
-        document.addEventListener('DOMContentLoaded', function() {
-            const quizOptions = document.querySelectorAll('.quiz-option');
-            quizOptions.forEach(option => {
-                option.addEventListener('click', function() {
-                    // 移除同一組選項中其他的選中狀態
-                    const parentOptions = this.parentElement.querySelectorAll('.quiz-option');
-                    parentOptions.forEach(opt => opt.classList.remove('selected'));
-                    // 為當前選項添加選中狀態
-                    this.classList.add('selected');
-                });
-            });
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/levels.js"></script>
+    <script type="module">
+import { auth } from './js/firebase-config.js';
+import { levelStatusManager } from './js/levelStatus.js';
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+// 更新關卡狀態顯示，並同步亮起互動關卡
+async function updateLevelStatusDisplay(userId) {
+    try {
+        const levels = await levelStatusManager.getAllLevelStatus(userId);
+        Object.entries(levels).forEach(([level, status]) => {
+            const levelCard = document.querySelector(`[data-level="${level}"]`);
+            if (levelCard) {
+                const statusElement = levelCard.querySelector('.level-status');
+                if (statusElement) {
+                    statusElement.textContent = status === 'completed' ? '已完成' : 
+                                              status === 'in_progress' ? '進行中' : '未開始';
+                    statusElement.className = 'level-status ' + status;
+                }
+                // 亮起互動關卡卡片
+                if (status === 'completed') {
+                    levelCard.classList.add('completed-card');
+                } else {
+                    levelCard.classList.remove('completed-card');
+                }
+            }
         });
-    </script>
+        // 讓成就徽章同步
+        if (window.updateBadges) window.updateBadges(levels);
+    } catch (error) {
+        console.error('獲取關卡狀態失敗:', error);
+    }
+}
+
+// 監聽登入狀態變化
+onAuthStateChanged(auth, (user) => {
+    const loginBtn = document.querySelector('.login-btn');
+    const logoutBtn = document.querySelector('.logout-btn');
+    const userNameSpan = document.getElementById('userName');
+
+    if (user) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+        userNameSpan.textContent = user.email;
+        updateLevelStatusDisplay(user.uid);
+    } else {
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+        userNameSpan.textContent = '訪客';
+    }
+});
+
+document.querySelector('.logout-btn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    try {
+        await auth.signOut();
+        window.location.href = 'index.html';
+    } catch (error) {
+        console.error('登出失敗:', error);
+    }
+});
+
+// 監聽關卡狀態更新事件
+window.addEventListener('levelStatusUpdated', () => {
+    const user = auth.currentUser;
+    if (user) {
+        updateLevelStatusDisplay(user.uid);
+    }
+});
+
+// 頁面載入時自動同步
+document.addEventListener('DOMContentLoaded', () => {
+    const user = auth.currentUser;
+    if (user) {
+        updateLevelStatusDisplay(user.uid);
+    }
+});
+
+// 讓成就頁可以呼叫 updateBadges
+window.updateBadges = window.updateBadges || undefined;
+
+document.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash;
+  if (hash && hash.endsWith('QuizModal')) {
+    const modal = document.querySelector(hash);
+    if (modal) {
+      const bsModal = new bootstrap.Modal(modal);
+      bsModal.show();
+    }
+  }
+});
+</script>
 </body>
 </html>
